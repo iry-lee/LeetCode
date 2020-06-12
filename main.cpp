@@ -1,5 +1,6 @@
 #include <iostream>
 #include "utils.h"
+#include "solution.cpp"
 
 int main() {
     char c;
