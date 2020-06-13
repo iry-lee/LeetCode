@@ -12,13 +12,23 @@ vector<int> utils::getVector(){
     while(c != '\n') {
         int number = 0;
         while (c != ',' && c != ']') {
-            number = number + c - '0';
+            number = number * 10 + c - '0';
             c = (char) getchar();
         }
         c = (char)getchar();
         result.push_back(number);
     }
     return result;
+}
+
+int utils::getInt() {
+    int n;
+    scanf("%d", &n);
+    return n;
+}
+
+string utils::getString() {
+
 }
 
 void utils::printVector(const vector<int>& v){
