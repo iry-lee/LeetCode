@@ -11,12 +11,21 @@ vector<int> utils::getVector(){
     char c = (char)getchar();
     while(c != '\n') {
         int number = 0;
+        int flag = 1;
         while (c != ',' && c != ']') {
+            // 读入正负号
+            if(c == '-'){
+                flag = -1;
+                c = getchar();
+            }
+            else if(c == '+'){
+                c = getchar();
+            }
             number = number * 10 + c - '0';
             c = (char) getchar();
         }
         c = (char)getchar();
-        result.push_back(number);
+        result.push_back(number*flag);
     }
     return result;
 }
@@ -57,6 +66,24 @@ void utils::printVector(const vector<int>& v){
             printf(",");
     }
     printf("]\n");
+}
+
+void utils::printVector2D(const vector<vector<int>> &v) {
+    printf("[\n");
+    for(int i = 0; i < v.size(); i++){
+        printf("   [");
+        for(int j = 0; j < v[i].size(); j++){
+            printf("%d", v[i][j]);
+            if(j != v[i].size()-1){
+                printf(",");
+            }
+        }
+        printf("]");
+        if(i != v.size()-1)
+            printf(",");
+        printf("\n");
+    }
+    printf("]");
 }
 
 void utils::printString(const string& s) {

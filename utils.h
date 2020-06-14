@@ -31,6 +31,13 @@ public:
     // 将程序中的vector打印成'[a,b,c,d]'这样的格式输出到控制台中
     void static printVector(const vector<int>& v);
 
+    // 将程序中的二维vector打印成:
+    // [
+    //      [-1, 0, 1],
+    //      [-1, -1, 2]
+    // ]
+    void static printVector2D(const vector<vector<int>> &v);
+
     // 输出字符串，字符串的内容在双引号之间，例如："adsadas"
     void static printString(const string& s);
 };

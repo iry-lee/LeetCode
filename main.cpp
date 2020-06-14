@@ -14,15 +14,17 @@
 
 #include <iostream>
 #include "utils.h"
-# include "my_solution/14/solution.cpp"   // 这里如果想跑哪一个题目的话，只要把中间的那个题号改掉就可以了
+# include "my_solution/15/solution.cpp"   // 这里如果想跑哪一个题目的话，只要把中间的那个题号改掉就可以了
 
 int main() {
     char c;
     Solution solution;  // 实例化题解文件中的类
 
-    vector<string> input = utils::getVectorString();
+    vector<int> input = utils::getVector();
 
-    utils::printString(solution.longestCommonPrefix(input));
+    vector<vector<int>> output = solution.threeSum(input);
+
+    utils::printVector2D(output);
 
     return 0;
 }
