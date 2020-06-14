@@ -58,3 +58,9 @@ void utils::printVector(const vector<int>& v){
     }
     printf("]\n");
 }
+
+void utils::printString(const string& s) {
+    cout << "\"";
+    cout << s;
+    cout << "\"";
+}
