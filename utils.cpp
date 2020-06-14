@@ -29,8 +29,24 @@ int utils::getInt() {
 
 string utils::getString() {
     string input;
-    cin >> input;
-    return input.substr(1, input.size()-2);
+    char c = (char)getchar(); // 把第一个 " 吃掉
+    c = (char)getchar();
+    while(c != '"'){
+        string part (1, c);
+        input.append(part);
+        c = (char)getchar();
+    }
+    return input;
+}
+
+vector<string> utils::getVectorString() {
+    vector<string> input;
+    char c = (char)getchar();  // 把'['吃掉
+    while(c != ']'){
+        input.push_back(getString());
+        c = getchar();
+    }
+    return input;
 }
 
 void utils::printVector(const vector<int>& v){

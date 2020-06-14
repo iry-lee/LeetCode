@@ -14,14 +14,13 @@
 
 #include <iostream>
 #include "utils.h"
-# include "my_solution/12/solution.cpp"   // 这里如果想跑哪一个题目的话，只要把中间的那个题号改掉就可以了
+# include "my_solution/13/solution.cpp"   // 这里如果想跑哪一个题目的话，只要把中间的那个题号改掉就可以了
 
 int main() {
     char c;
     Solution solution;  // 实例化题解文件中的类
 
-    int n = utils::getInt();
-    cout << solution.intToRoman(n);
+    cout << solution.romanToInt(utils::getString());
 
     return 0;
 }
