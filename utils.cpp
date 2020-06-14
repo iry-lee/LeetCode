@@ -23,12 +23,14 @@ vector<int> utils::getVector(){
 
 int utils::getInt() {
     int n;
-    scanf("%d", &n);
+    cin >> n;
     return n;
 }
 
 string utils::getString() {
-
+    string input;
+    cin >> input;
+    return input.substr(1, input.size()-2);
 }
 
 void utils::printVector(const vector<int>& v){
