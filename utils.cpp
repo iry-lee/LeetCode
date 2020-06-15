@@ -4,6 +4,7 @@
 
 #include "utils.h"
 
+
 vector<int> utils::getVector(){
     // 针对是这样的输入：[1,8,6,2,5,4,8,3,7]
     vector<int> result;
@@ -101,3 +102,28 @@ void utils::printVectorString(const vector<string> & s){
     }
     printf("].");
 }
+
+void utils::printListNode(ListNode *head){
+    ListNode *pt = head;
+    while(pt != nullptr){
+        printf("(%d)", pt->val);
+        if(pt->next != nullptr){
+            cout << "->";
+        }
+        pt = pt->next;
+    }
+}
+
+ListNode* utils::createListNode(int n, ListNode *head){
+    if(n <= 0) return nullptr;
+    ListNode *pt = head;
+    for(int i = 1; i < n; i++){
+        ListNode *temp = (ListNode*)malloc(sizeof(ListNode));
+        temp->val = i + 1;
+        temp->next = nullptr;
+        pt->next = temp;
+        pt = temp;
+    }
+    return head;
+}
+
