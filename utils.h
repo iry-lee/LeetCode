@@ -40,6 +40,9 @@ public:
 
     // 输出字符串，字符串的内容在双引号之间，例如："adsadas"
     void static printString(const string& s);
+
+    //输出字符串数组，格式例如：["aa", "ac"].
+    void static printVectorString(const vector<string> &s);
 };
 
 #endif //LEETCODE_UTILS_H

@@ -91,3 +91,13 @@ void utils::printString(const string& s) {
     cout << s;
     cout << "\"";
 }
+
+void utils::printVectorString(const vector<string> & s){
+    printf("[");
+    for(int i = 0; i < s.size(); i++){
+        printString(s[i]);
+        if(i != s.size() - 1)
+            printf(",");
+    }
+    printf("].");
+}
