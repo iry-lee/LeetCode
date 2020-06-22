@@ -14,16 +14,16 @@
 
 #include <iostream>
 #include "utils.h"
-# include "my_solution/22/solution.cpp"   // 这里如果想跑哪一个题目的话，只要把中间的那个题号改掉就可以了
+# include "my_solution/10/solution.cpp"   // 这里如果想跑哪一个题目的话，只要把中间的那个题号改掉就可以了
 
 int main() {
     char c;
     Solution solution;  // 实例化题解文件中的类
 
-    int n;
-    cin >> n;
-    vector<string> output = solution.generateParenthesis(n);
-    utils::printVectorString(output);
+    string s = utils::getString();
+    string p = utils::getString();
+
+    cout << solution.isMatch(s, p);
 
     return 0;
 }

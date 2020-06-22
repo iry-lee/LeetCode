@@ -46,6 +46,7 @@ string utils::getString() {
         input.append(part);
         c = (char)getchar();
     }
+    c = getchar(); //把最后的回车吃掉
     return input;
 }
 
