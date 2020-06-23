@@ -16,8 +16,9 @@ public:
     ListNode* reverseKGroup(ListNode* head, int k) {
         // 声明大小为k的数组存放指针，数组最后一个
         ListNode forehead(0);
+        ListNode *begin = &forehead;
         forehead.next = head;
-        vector<ListNode*> parray(k+1, &forehead);
+        vector<ListNode*> parray(k+1, nullptr);
         // 如果链表为空或者只有一个节点
         if(head == nullptr || head->next == nullptr){
             return head;
@@ -25,16 +26,13 @@ public:
         // 否则就有大于等于2个节点
         // 操作以k为周期
         while(1){
-            // k个指针依次向前行进
-            int i = 0;
-            for(; i < k && parray[0] != nullptr; i++){
-                for(int j = 0; j <= i && parray[0] != nullptr; j++){
-                    parray[j] = parray[j]->next;
-                }
+            // 给k个指针赋值
+            int i;
+            for(i = k; i >= 0 && begin != nullptr; i--){
+                parray[i] = begin;
+                begin = begin->next;
             }
-            // printf("<%d>\n", parray[0]->val);
-            // 说明剩下的这一段数量不够k个
-            if(i < k || parray[0] == nullptr) break;
+            if(i > -1) break;
             // ########  开始大交换  #########
             // 把连接下一个周期的节点得先存起来
             ListNode *temp = parray[0]->next;
@@ -43,10 +41,7 @@ public:
             }
             parray[k]->next = parray[0];
             parray[k-1]->next = temp;
-            // 为下一个周期初始化值
-            for(int j = 0; j < k+1; j++){
-                parray[j] = parray[k-1];
-            }
+            begin = parray[k-1];
         }
         return forehead.next;
     }
