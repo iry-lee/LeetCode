@@ -84,3 +84,20 @@ p 可能为空，且只包含从 a-z 的小写字母，以及字符 . 和 
 //        return (j > (int)p.size()-1 && i > (int)s.size()-1);
 //    }
 //};
+
+// main.cpp
+//#include <iostream>
+//#include "utils.h"
+//# include "my_solution/10/solution.cpp"   // 这里如果想跑哪一个题目的话，只要把中间的那个题号改掉就可以了
+//
+//int main() {
+//    char c;
+//    Solution solution;  // 实例化题解文件中的类
+//
+//    string s = utils::getString();
+//    string p = utils::getString();
+//
+//    cout << solution.isMatch(s, p);
+//
+//    return 0;
+//}
