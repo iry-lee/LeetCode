@@ -15,17 +15,14 @@
 #include <iostream>
 #include <cstdio>
 #include "utils.h"
-#include "my_solution/28/solution.cpp"   // 这里如果想跑哪一个题目的话，只要把中间的那个题号改掉就可以了
+#include "my_solution/JZOffer03/solution.cpp"   // 这里如果想跑哪一个题目的话，只要把中间的那个题号改掉就可以了
 
 int main() {
-    // 输入重定向，现在有点问题
-    // freopen("input.txt","r", stdin);
 
-    char c;
     Solution solution;  // 实例化题解文件中的类
-    string s1 = utils::getString();
-    string s2 = utils::getString();
-    cout << solution.strStr(s1, s2);
+
+    vector<int> input = utils::getVector();
+    cout << solution.findRepeatNumber(input);
 
     return 0;
 }

@@ -1,3 +1,4 @@
+
 class Solution {
 public:
     struct hash_string{
@@ -13,7 +14,7 @@ public:
             total_len += words[i].size();
         }
         vector <hash_string> choices;   // words的全排列数量的选项
-        for
+
         // 哈希值匹配上以后，最好还是逐字符比较一下比较保险，防止哈希值碰撞
 
         return result;
