@@ -58,6 +58,8 @@ public:
 
     // 自动创建一个链表，参数n为链表的长度，返回链表的头节点
     ListNode static *createListNode(int n, ListNode *head);
+
+    vector<vector<int>> static getVector2D();
 };
 
 #endif //LEETCODE_UTILS_H

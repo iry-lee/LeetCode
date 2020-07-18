@@ -10,7 +10,7 @@ vector<int> utils::getVector(){
     vector<int> result;
     getchar(); // 先把'['吃进来
     char c = (char)getchar();
-    while(c != '\n') {
+    while(1) {
         int number = 0;
         int flag = 1;
         while (c != ',' && c != ']') {
@@ -25,9 +25,21 @@ vector<int> utils::getVector(){
             number = number * 10 + c - '0';
             c = (char) getchar();
         }
-        c = (char)getchar();
         result.push_back(number*flag);
+        if(c == ']') break;
+        c = getchar();
     }
+    return result;
+}
+
+vector<vector<int>> utils::getVector2D() {
+    vector<vector<int>> result;
+    char c = getchar();
+    while(c != ']'){
+        result.push_back(getVector());
+        c = getchar();
+    }
+    getchar();  // 把最后的\n吃掉
     return result;
 }
 
@@ -53,7 +65,7 @@ string utils::getString() {
 vector<string> utils::getVectorString() {
     vector<string> input;
     char c = (char)getchar();  // 把'['吃掉
-    while(c != ']'){
+    while(c != '\n'){
         input.push_back(getString());
         c = getchar();
     }

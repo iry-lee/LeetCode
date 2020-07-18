@@ -1,22 +1,58 @@
+#include <vector>
+#include <string>
+#include <iostream>
+#include <cstdlib>
+#include <memory.h>
+using namespace std;
 
 class Solution {
 public:
-    struct hash_string{
-        int hash;
-        string s;
+    struct domain{
+        int begin;
+        int end;
+        int *table;
+        int table_size;
     };
     vector<int> findSubstring(string s, vector<string>& words) {
         vector<int> result;
-        int total_len = 0;      // 目标串的总长度
-        int a = 26;             // base value for rolling hash
-        int modulus = 1 << 31;  // modulus for rolling hash
-        for(int i = 0; i < words.size(); i++){
-            total_len += words[i].size();
+        // 先找到第一个word的出现的所有的位置，得到一组区间
+        // 对于每一个区间，判断区间前后是否有相邻的words，有则扩展区间范围，直到所有的单词都包含在该区间中
+        // 没有则验证下一个区间
+        // 直到所有的可能的区间都被查找完毕
+        vector<domain> choices;
+        if(words.empty()) return result;    // 如果words为空的话，返回空
+        // 对于words[0]，先初始化 choices
+        int position = 0;
+        while (1){
+            position = s.find(words[0], position);
+            if(position == string::npos) break;
+            else{
+                // 加入新的choice
+                cout << "[" << position << "," << position+words[0].size() << "]\n";
+                int table[words.size()];
+                memset(table, 0, sizeof(int)*words.size());
+                table[0] = 1;
+                choices.push_back({position, position + (int)words[0].size(), table, (int)words.size()});
+                position++;
+            }
         }
-        vector <hash_string> choices;   // words的全排列数量的选项
+        // 如果choice为空，说明words[0]就不存在
+        if (choices.empty()) return result;
+        if (words.size() == 1){
+            for(int i = 0; i < choices.size(); i++){
+                result.push_back(choices[i].begin);
+            }
+            return result;
+        }
+        // 开始区间扩展
+        for (int i = 0; i < choices.size(); i++){
+            for (int j = 1; j < words.size(); j++){
+                // 对于没有添加入区间的才尝试添加
+                if(choices[i].table[j] == 0){
 
-        // 哈希值匹配上以后，最好还是逐字符比较一下比较保险，防止哈希值碰撞
-
+                }
+            }
+        }
         return result;
     }
 };
