@@ -3,11 +3,37 @@
 #include <iostream>
 using namespace std;
 
-// 是不是还有O(n)的方法？
+// 这是一个O(n)的方法，用到了栈
+// 但我的运行速度在提交者里面还是垫底
 class Solution {
 public:
     int longestValidParentheses(string s) {
-
+        stack<char> brackets;
+        stack<int> length;
+        length.push(0);
+        int maxLen = 0;
+        for(int i = 0; i < s.size(); i++){
+            if(s[i] == '('){
+                brackets.push('(');
+                length.push(0);
+            }
+            else{ // s[i] == ')'
+                if(brackets.empty()){
+                    length.push(0);
+                    continue;
+                }
+                else{
+                    brackets.pop();
+                    int num = length.top() + 2;
+                    length.pop();
+                    num += length.top();
+                    if(num > maxLen) maxLen = num;
+                    length.pop();
+                    length.push(num);
+                }
+            }
+        }
+        return maxLen;
     }
 };
 
