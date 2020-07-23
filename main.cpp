@@ -21,5 +21,12 @@ int main() {
 
     Solution solution;  // 实例化题解文件中的类
 
+    vector<char> c1 = {'A','B','C','E'};
+    vector<char> c2 = {'S','F','E','S'};
+    vector<char> c3 = {'A','D','E','E'};
+    vector<vector<char>> vvc = {c1, c2, c3};
+
+    cout << solution.exist(vvc, "ABCESEEEFS");
+
     return 0;
 }
