@@ -10,7 +10,6 @@ public:
         // 分析完了几种特殊情况
         int middle = (begin + end) / 2;
         if(nums[begin] > nums[end]){ // 说明这个区间包含旋转数组
-            int n1, n2;
             if(target > nums[end] && target < nums[begin]) return -1;
             if(nums[middle] > nums[end]){   // 说明begin~middle是一个顺序区间，middle+1~end是一个旋转区间
                 if(nums[begin] <= target && nums[middle] >= target) return function(nums, begin, middle, target);
