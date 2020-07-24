@@ -3,49 +3,50 @@
 #include <stack>
 #include <memory.h>
 #include <iostream>
+#include <queue>
 
 using namespace std;
-
-class Solution {
-public:
-    int basic(int m, int n, int k){
-        int result = 0;
-        for(int i = 0; i < m; i++){
-            int temp = k - i + 1;
-            if(temp <= 0) break;
-            else if(temp < n) result += temp;
-            else result += n;
-        }
-        return result;
-    }
-    int movingCount(int m, int n, int k) {
-        int result = 0;
-        if (k < 9 || (m <= 9 && n <= 9)) return basic(m, n, k);
-        else{
-            // 划分成10x10的格子，然后使用basic计算
-            int x = 0, y = 0, _k = k;
-            while(x < m){
-                if(_k < 8) break;
-                y = 0;
-                int _kk = _k;
-                while (y < n){
-                    if(_kk < 8) break;
-                    printf("* ");
-                    int _m = 10, _n = 10;
-                    if(x + 10 > m) _m = m % 10;
-                    if(y + 10 > n) _n = n % 10;
-                    result += basic(_m, _n, _kk);
-                    y += 10;
-                    _kk--;
-                }
-                printf("\n");
-                _k--;
-                x += 10;
-            }
-        }
-        return result;
-    }
-};
+// 【方法一】找规律
+//class Solution {
+//public:
+//    int basic(int m, int n, int k){
+//        int result = 0;
+//        for(int i = 0; i < m; i++){
+//            int temp = k - i + 1;
+//            if(temp <= 0) break;
+//            else if(temp < n) result += temp;
+//            else result += n;
+//        }
+//        return result;
+//    }
+//    int movingCount(int m, int n, int k) {
+//        int result = 0;
+//        if (k < 9 || (m <= 9 && n <= 9)) return basic(m, n, k);
+//        else{
+//            // 划分成10x10的格子，然后使用basic计算
+//            int x = 0, y = 0, _k = k;
+//            while(x < m){
+//                if(_k < 8) break;
+//                y = 0;
+//                int _kk = _k;
+//                while (y < n){
+//                    if(_kk < 8) break;
+//                    printf("* ");
+//                    int _m = 10, _n = 10;
+//                    if(x + 10 > m) _m = m % 10;
+//                    if(y + 10 > n) _n = n % 10;
+//                    result += basic(_m, _n, _kk);
+//                    y += 10;
+//                    _kk--;
+//                }
+//                printf("\n");
+//                _k--;
+//                x += 10;
+//            }
+//        }
+//        return result;
+//    }
+//};
 /*
 反例：
 15 15 14
@@ -75,8 +76,8 @@ public:
 依次类推，直到k小于8，就不方便往外扩展了
 */
 
-/*
-【广度优先搜索】
+
+// 【方法二】广度优先搜索 BFS
 class Solution {
 public:
     struct point{
@@ -97,46 +98,35 @@ public:
     }
     int movingCount(int m, int n, int k) {
         if(m == 0 || n == 0) return 0;
-        int ct = 0;
+        int ct = 1;
         int map[m][n];
-        stack<point> st;
+        queue<point> q;
         memset(map, 0, sizeof(int)*m*n);
-        st.push({0, 0});
-        while (!st.empty()){
-            stack<point> temp;
-            while(!st.empty()) {
-                point top = st.top();
-                if(map[top.x][top.y] == 0) {
-                    map[top.x][top.y] = 1;
-                    ct++;
-                }
-                // 注意，这里要用广度优先搜索来做
-                st.pop();
-                // 上
-                if(top.x - 1 > 0 && bitAdding(top.x-1, top.y) <= k && map[top.x-1][top.y] == 0)
-                    temp.push({top.x-1, top.y});
-                // 下
-                if(top.x + 1 < m && bitAdding(top.x+1, top.y) <= k && map[top.x+1][top.y] == 0)
-                    temp.push({top.x+1, top.y});
-                // 左
-                if(top.y - 1 > 0 && bitAdding(top.x, top.y-1) <= k && map[top.x][top.y-1] == 0)
-                    temp.push({top.x, top.y-1});
-                // 右
-                if(top.y + 1 < n && bitAdding(top.x, top.y+1) <= k && map[top.x][top.y+1] == 0)
-                    temp.push({top.x, top.y+1});
+        q.push({0, 0});
+        map[0][0] = 1;
+        while(!q.empty()) {
+            point top = q.front();
+            // 注意，这里要用广度优先搜索来做
+            q.pop();
+            // 下
+            if(top.x + 1 < m && bitAdding(top.x+1, top.y) <= k && map[top.x+1][top.y] == 0) {
+                q.push({top.x + 1, top.y});
+                map[top.x+1][top.y] = 1;
+                ct++;
             }
-            while(!temp.empty()){
-                st.push(temp.top());
-                temp.pop();
+            // 右
+            if(top.y + 1 < n && bitAdding(top.x, top.y+1) <= k && map[top.x][top.y+1] == 0) {
+                q.push({top.x, top.y + 1});
+                map[top.x][top.y+1] = 1;
+                ct++;
             }
         }
-        for(int i = 0; i < m; i++){
-            for(int j = 0; j < n; j++){
-                cout << map[i][j] << " ";
-            }
-            cout << "\n";
-        }
+//        for(int i = 0; i < m; i++){
+//            for(int j = 0; j < n; j++){
+//                cout << map[i][j] << " ";
+//            }
+//            cout << "\n";
+//        }
         return ct;
     }
 };
-*/
