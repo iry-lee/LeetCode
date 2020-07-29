@@ -14,7 +14,7 @@
 
 #include <iostream>
 #include "utils.h"
-#include "my_solution/38/solution.cpp"   // 这里如果想跑哪一个题目的话，只要把中间的那个题号改掉就可以了
+#include "my_solution/36/solution.cpp"   // 这里如果想跑哪一个题目的话，只要把中间的那个题号改掉就可以了
 
 int main() {
     char c;
