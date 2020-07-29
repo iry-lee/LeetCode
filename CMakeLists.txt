@@ -3,4 +3,4 @@ project(LeetCode)
 
 set(CMAKE_CXX_STANDARD 14)
 
-add_executable(LeetCode main.cpp utils.cpp utils.h   my_solution/JZOffer14-I/solution.cpp my_solution/JZOffer14-II/solution.cpp my_solution/JZOffer16/solution.cpp)
+add_executable(LeetCode main.cpp utils.cpp utils.h   my_solution/38/solution.cpp)
