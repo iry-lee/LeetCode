@@ -1,3 +1,7 @@
+#include <vector>
+
+using namespace std;
+
 class MedianFinder {
 public:
     /** initialize your data structure here. */
