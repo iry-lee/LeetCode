@@ -15,6 +15,18 @@
 
 
 
+### 0. Leetcode中对应的相关题目
+
+- [Leetcode-279 完全平方数](https://leetcode-cn.com/problems/perfect-squares/)
+- [Leetcode-322 零钱兑换](https://leetcode-cn.com/problems/coin-change/)
+
+
+
 ### 1. 钢条切割问题
 
 有一条长度为n的钢条，而不同长度的钢条对应的单位长度价格不同，已知一个钢条长度与价格的对应表，求如何切割钢条能够获得最大的收益。
+
+
+
+
+
