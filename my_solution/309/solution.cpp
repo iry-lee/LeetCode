@@ -38,34 +38,60 @@
 // 买入操作产生的是负收益——这个很重要，刚刚没想清楚就不知道怎么做
 
 // 因为只需要存储前一天的信息，所以可以优化一下空间
+// class Solution {
+// public:
+//     int maxProfit(vector<int>& prices) {
+//         int len = prices.size();
+//         if(len == 0) return 0;
+//         // 0：持有股票
+//         // 1：冷冻期
+//         // 2：不持有股票也不处于冷冻期
+//         int dp[2][3], ans = 0;  // 这里对空间做了一个优化
+//         // 初始化
+//         dp[0][0] = -1*prices[0];
+//         dp[0][1] = 0;
+//         dp[0][2] = 0;
+//         // 开始计算
+//         for(int i = 1; i < len; i++){
+//             // 每过一天，三个状态都可以做一次转换
+//             // 每次转换，如果产生了更高的收益，就可以更新dp数组中的值
+//             dp[1][0] = max(dp[0][0], dp[0][2]-prices[i]);
+//             dp[1][1] = dp[0][0] + prices[i];
+//             dp[1][2] = max(dp[0][1], dp[0][2]);
+//             // 交换一下信息
+//             dp[0][0] = dp[1][0];
+//             dp[0][1] = dp[1][1];
+//             dp[0][2] = dp[1][2];
+//         }
+//         return max(dp[0][1], dp[0][2]);
+//     }
+// };
+
+// 甚至可以简化为两个状态
+// 因为之前冷冻期为一天嘛，就可以直接将之前的i-1改为i-2
 class Solution {
 public:
     int maxProfit(vector<int>& prices) {
         int len = prices.size();
-        if(len == 0) return 0;
-        // 0：持有股票
-        // 1：冷冻期
-        // 2：不持有股票也不处于冷冻期
-        int dp[2][3], ans = 0;  // 这里对空间做了一个优化
-        // 初始化
-        dp[0][0] = -1*prices[0];
+        if(!len) return 0;
+        // 初始化状态
+        // 也可以初始化dp[-1]的状态，初始化为
+        // dp[-1][0] = INT_MIN, dp[-1][1] = 0;
+        // 然后后面从 i = 0 开始
+        int dp[len+1][2];
+        dp[0][0] = INT_MIN;
         dp[0][1] = 0;
-        dp[0][2] = 0;
-        // 开始计算
-        for(int i = 1; i < len; i++){
-            // 每过一天，三个状态都可以做一次转换
-            // 每次转换，如果产生了更高的收益，就可以更新dp数组中的值
-            dp[1][0] = max(dp[0][0], dp[0][2]-prices[i]);
-            dp[1][1] = dp[0][0] + prices[i];
-            dp[1][2] = max(dp[0][1], dp[0][2]);
-            // 交换一下信息
-            dp[0][0] = dp[1][0];
-            dp[0][1] = dp[1][1];
-            dp[0][2] = dp[1][2];
+        dp[1][0] = 0 - prices[0];
+        dp[1][1] = 0;
+        for(int i = 2; i <= len; i++){
+            dp[i][0] = max(dp[i-1][0], dp[i-2][1] - prices[i-1]);   // 因为冷冻期，这里购买需要从i-2天的时候买
+            dp[i][1] = max(dp[i-1][1], dp[i-1][0] + prices[i-1]);
         }
-        return max(dp[0][1], dp[0][2]);
-    }
+        // for(int i = 0; i < len; i++) cout << dp[i][0] << " ";
+        // cout << endl;
+        // for(int i = 0; i < len; i++) cout << dp[i][1] << " ";
+        // cout << endl;
+        return dp[len][1];
+    } 
 };
 
-// 有一个很好的总结
-// https://blog.csdn.net/weixin_44413191/article/details/106346918
