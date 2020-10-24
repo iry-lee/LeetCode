@@ -1,6 +1,34 @@
-## 序列容器
+# C++ STL
 
+## 序列式容器
 
+### vector
+
+### list
+
+### deque
+
+### stack
+
+### queue
+
+### heap
+
+heap并不属于STL容器组件，它是一个幕后英雄，扮演priority queue的助手。priority queue 允许用户以任何次序将元素推入容器内，但是取出时一定是从优先权最高的开始。binary max heap 正是具有这样的特性，适合作为 priority queue的底层机制。
+
+相比binary search tree，例如 RB-tree，虽然元素的插入和极值的取得都有O(logn)的表现，但是有点小题大作。一来是binary search tree 的输入需要有足够的随机性，二来 binary search tree并不容易实现，priority queue的复杂度最好能够介于queue 和 binary search tree之间才算是合适，这样，使用 完全二叉树 complete binary tree的binary heap也便应运而生。
+
+使用完全二叉树的好处在于，可以直接使用连续的数组来存储数据。堆heap可以分为大顶堆max-heap和min-heap小顶堆。STL提供的是max-heap，如果想要构造小顶堆，只需要传入自己重写的比较函数即可。
+
+#### push_heap()
+
+时间复杂度O(logN)，它所做的操作是将vector的最后一个元素，加入到堆中。
+
+### priority_queue
+
+priority_queue是由max-heap实现
+
+### slist
 
 ## 关联容器
 
