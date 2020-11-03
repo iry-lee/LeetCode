@@ -18,6 +18,7 @@
 //      
 // 【dfs求解】
 // 运行超时，正确性应该没有问题
+/*
 class Solution {
 public:
     bool func(vector<int>& candidates, int begin, int target){
@@ -57,5 +58,70 @@ public:
         if(nums[(int)nums.size()-1] > sum/2) return false;
         else if(nums[(int)nums.size()-1] == sum/2) return true;
         else return func(nums, 0, sum/2);
+    }
+};*/
+
+// 自己想到的动态规划的方法
+// 刚好不超时
+// dp用unordered_set存储，只存储和的大小
+// 先对nums排序
+/*
+class Solution {
+public:
+    bool canPartition(vector<int>& nums) {
+        unordered_set<int> hash;
+        int sum = 0, n = nums.size();
+        if(n == 0) return true;
+        sort(nums.begin(), nums.end());
+        for(int n : nums) sum += n;
+        if(sum % 2 == 1) return false;
+        if(nums[n-1] > sum / 2) return false;
+        else if(nums[n-1] == sum / 2) return true;
+        for(int n : nums){
+            // 遍历一遍集合
+            unordered_set<int> tempHash = hash;
+            unordered_set<int>::iterator ite = hash.begin();
+            // 哈希的复杂度在于遍历而不是查找
+            for( ; ite != hash.end(); ite++){
+                int temp = *ite + n;
+                if(temp > sum / 2) continue;    // 这个剪枝为啥效果不明显？
+                if(temp == sum/2) return true;
+                if(tempHash.find(temp) == tempHash.end())
+                    tempHash.insert(temp);
+            }
+            hash = tempHash;
+            if(hash.find(n) == hash.end()) hash.insert(n);
+        }
+        return false;
+    }
+};*/
+// 官方解法：二维动态数组
+class Solution {
+public:
+    bool canPartition(vector<int>& nums) {
+        int sum = 0, n = nums.size(), target;
+        // 预处理，解决一些显而易见的不可能的情况
+        if(n == 0) return true;
+        sort(nums.begin(), nums.end());
+        for(int n : nums) sum += n;
+        target = sum/2;
+        if(sum % 2 == 1) return false;
+        if(nums[n-1] > target) return false;
+        else if(nums[n-1] == target) return true;
+        // 建立dp数组,dp[i][j]表示，在数组下标[0,i]的范围内，是否存在一个子数组满足其和为j。
+        int dp[n][target+1];
+        memset(dp, 0, sizeof(dp));
+        // 初始化一些边界条件
+        dp[0][nums[0]] = 1; // 当i==0的时候，只有nums[0]为1
+        for(int i = 1; i < n; i++){
+            dp[i][0] = 1;   // 即啥都不取，所以dp[i][0]显然为1
+            for(int j = 0; j < target+1; j++){
+                if(dp[i-1][j] == 1){
+                    dp[i][j] = 1;
+                    if(j + nums[i] < target + 1) dp[i][j + nums[i]] = 1;
+                }
+            }
+        }
+        return dp[n-1][target];
     }
 };
