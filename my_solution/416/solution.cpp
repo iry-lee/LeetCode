@@ -117,7 +117,9 @@ public:
             dp[i][0] = 1;   // 即啥都不取，所以dp[i][0]显然为1
             for(int j = 0; j < target+1; j++){
                 if(dp[i-1][j] == 1){
+                    // 子数组中不选nums[i]
                     dp[i][j] = 1;
+                    // 子数组中选nums[i]
                     if(j + nums[i] < target + 1) dp[i][j + nums[i]] = 1;
                 }
             }
