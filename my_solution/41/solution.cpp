@@ -51,23 +51,27 @@
 // };
 
 // [3] 题解中的方法：空间复杂度为O(1)的哈希
+// 又叫原地哈希
 class Solution {
 public:
     int firstMissingPositive(vector<int>& nums) {
         int n = nums.size();
-        // 先把范围在[n+1, +infi)的数字转为负值
-        // 注意，正转负不会发生溢出，但是负转正有这个风险
+        // 先把范围在(-infi, 0] 和 [n+1, +infi) 区间内的值都改为 n+1;
         for(int i = 0; i < nums.size(); i++)
-            if(nums[i] > n) nums[i] *= -1;
-        // 然后把出现了的地方从负值转为正值
+            if(nums[i] >= n+1 || nums[i] <= 0) nums[i] = n+1;
+        // for(int num : nums) cout << num << " ";
+        // cout << endl;
+        // 这样整个数组就都是正数了
         for(int i = 0; i < nums.size(); i++){
-            if(nums[i] > 0){
-                int posi = nums[i];
-                if(nums[posi-1] < 0) nums[posi-1] = 1; 
+            if(abs(nums[i]) != n+1){
+                int temp = abs(nums[i]);
+                if(nums[temp - 1] > 0) nums[temp-1] *= -1;
             }
         }
+        // for(int num : nums) cout << num << " ";
+        // cout << endl;
         for(int i = 0; i < nums.size(); i++){
-            if(nums[i] < 0) return i+1;
+            if(nums[i] > 0) return i+1;
         }
         return n + 1;
     }
