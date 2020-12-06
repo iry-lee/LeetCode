@@ -40,10 +40,9 @@ public:
         for(int i = 0; i < newarr.size(); i++){
             int ct = countOne(newarr[i]);
             // 先看看可不可以将自己加在别的字符串后面
-            for(int j = 0; j < Size; j++){
-                for(int k = (int)(dp[j].size()-1); k >= 0; k--){
+            for(int j = Size-1; j >= 0; j--){
+                for(int k = 0; k < dp[j].size(); k++){
                     if((newarr[i] & dp[j][k]) == 0){
-                        // cout << j + ct << endl;
                         dp[j+ct].push_back(newarr[i]+dp[j][k]);
                     }
                 }
