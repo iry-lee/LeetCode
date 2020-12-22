@@ -1,77 +1,64 @@
-#include <vector>
-#include <string>
-#include <iostream>
-#include <cstdlib>
-#include <memory.h>
-using namespace std;
-
+// 注意题干里有一个条件，长度相同的单词words，假设长度为n
+// 那这样的话，可以原字符串s分成一堆长度n的片段
+// 这样的切分方式有n-1种
+// 每种方式下，都去找是否有片段与words中的一个相同
+// 这里可以使用hash来做
 class Solution {
 public:
-    struct domain{
-        int begin;
-        int end;
-        int *table;
-        int table_size;
-    };
     vector<int> findSubstring(string s, vector<string>& words) {
-        vector<int> result;
-        // 先找到第一个word的出现的所有的位置，得到一组区间
-        // 对于每一个区间，判断区间前后是否有相邻的words，有则扩展区间范围，直到所有的单词都包含在该区间中
-        // 没有则验证下一个区间
-        // 直到所有的可能的区间都被查找完毕
-        vector<domain> choices;
-        if(words.empty()) return result;    // 如果words为空的话，返回空
-        // 对于words[0]，先初始化 choices
-        int position = 0;
-        while (1){
-            position = s.find(words[0], position);
-            if(position == string::npos) break;
-            else{
-                // 加入新的choice
-                cout << "[" << position << "," << position+words[0].size() << "]\n";
-                int table[words.size()];
-                memset(table, 0, sizeof(int)*words.size());
-                table[0] = 1;
-                choices.push_back({position, position + (int)words[0].size(), table, (int)words.size()});
-                position++;
+        int len = s.size();
+        if(words.size() == 0){
+            vector<int> v;
+            if(len == 0){
+                v.push_back(0);
+                return v;
             }
+            else return v;
         }
-        // 如果choice为空，说明words[0]就不存在
-        if (choices.empty()) return result;
-        if (words.size() == 1){
-            for(int i = 0; i < choices.size(); i++){
-                result.push_back(choices[i].begin);
-            }
-            return result;
-        }
-        // 开始区间扩展
-        for (int i = 0; i < choices.size(); i++){
-            for (int j = 1; j < words.size(); j++){
-                // 对于没有添加入区间的才尝试添加
-                if(choices[i].table[j] == 0){
-
+        
+        int n = words[0].size();
+        vector<int> res;
+        // n-1种切分方式
+        for(int i = 0; i < n; i++){
+            int ct = 0;
+            unordered_map<int, int> hash;
+            for(int j = i; j < len; j+=n){
+                // cout << j << endl;
+                for(int k = 0; k < words.size(); k++){
+                    // cout << s.substr(j, n) << " " << words[k] << endl;
+                    if(s.substr(j, n) == words[k]){
+                        if(hash.find(k) == hash.end()){
+                            hash[k] = j;
+                            ct++;
+                        }
+                        else{
+                            for(auto ite = hash.begin(); ite != hash.end();){
+                                auto temp = ite;
+                                ite++;
+                                if(temp->second < hash[k]) {
+                                    hash.erase(temp->first);
+                                    ct--;
+                                }
+                            }
+                            hash[k] = j;
+                        }
+                        if(ct == words.size()){
+                            res.push_back(j + n - ct*n);
+                        }
+                        break;
+                    }
                 }
             }
         }
-        return result;
+        return res;
     }
 };
 
-// main.cpp
 
-//#include <iostream>
-//#include <cstdio>
-//#include "utils.h"
-//# include "my_solution/30/solution.cpp"   // 这里如果想跑哪一个题目的话，只要把中间的那个题号改掉就可以了
-//
-//int main() {
-//
-//    Solution solution;  // 实例化题解文件中的类
-//
-//    string s = utils::getString();
-//    vector<string> words = utils::getVectorString();
-//
-//    utils::printVector(solution.findSubstring(s, words));
-//
-//    return 0;
-//}
+/*
+忘记考虑单词可能出现重复的问题了：
+测试点：
+"wordgoodgoodgoodbestword"
+["word","good","best","good"]
+
+*/
